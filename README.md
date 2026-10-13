@@ -1,3 +1,5 @@
+<img src="docs/icon.svg" width="96" alt="Reelize icon" />
+
 # Reelize
 
 Counts the Instagram Reels and YouTube Shorts you watch. A small floating bubble shows
@@ -5,6 +7,21 @@ today's count while you scroll, and the app shows a daily dashboard of reels, ti
 those feeds, and total time in social apps.
 
 Local only. No account, no cloud, no `INTERNET` permission.
+
+| Today | A past day | Any date |
+|---|---|---|
+| <img src="docs/screenshots/01-dashboard.png" width="240" /> | <img src="docs/screenshots/02-past-day.png" width="240" /> | <img src="docs/screenshots/03-date-picker.png" width="240" /> |
+
+| Bubble over Shorts | Tap for today's time |
+|---|---|
+| <img src="docs/screenshots/04-bubble.png" width="240" /> | <img src="docs/screenshots/05-bubble-tapped.png" width="240" /> |
+
+| Bubble settings | One colour | Picture and position |
+|---|---|---|
+| <img src="docs/screenshots/06-bubble-settings.png" width="240" /> | <img src="docs/screenshots/07-bubble-one-colour.png" width="240" /> | <img src="docs/screenshots/08-bubble-position.png" width="240" /> |
+
+Screenshots are from an emulator with a week of sample data. The video behind the bubble is
+blurred.
 
 ## Download
 
@@ -19,6 +36,15 @@ Android blocks installs from outside the Play Store until told otherwise, so ins
 takes two one-time steps: allow installs from the app you received the file through, and tap
 past the Play Protect "unknown developer" warning.
 
+**"App blocked to protect your device", with only an OK button.** In some countries,
+India among them, Play Protect blocks apps that use accessibility from being installed from a
+browser, a chat app or a file manager. It has no "Install anyway" option. Installing over USB
+from a computer isn't affected:
+
+```
+adb install Reelize-0.1.0.apk
+```
+
 ## Setup
 
 Reelize needs two permissions, both granted in Android settings. The dashboard links to each
@@ -29,6 +55,10 @@ one until it is on.
    ("Restricted setting"). Open App info for Reelize, tap ⋮ → **Allow restricted settings**,
    then go back and switch it on.
 2. **Usage access: social media time.** Settings → Usage access → Reelize → allow.
+
+| First launch |
+|---|
+| <img src="docs/screenshots/09-setup.png" width="240" /> |
 
 ## What it does
 

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="18 18 72 72" width="96" height="96">
+  <!-- Same artwork as app/src/main/res/drawable/ic_launcher_*.xml, inside the adaptive-icon safe zone. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5B2FC2"/>
+      <stop offset="0.5" stop-color="#9A3FC9"/>
+      <stop offset="1" stop-color="#FF5C72"/>
+    </linearGradient>
+  </defs>
+  <rect x="18" y="18" width="72" height="72" rx="18" fill="url(#bg)"/>
+  <g transform="rotate(-12 54 54)">
+    <path fill="#FFFFFF" fill-opacity="0.35" d="M45,33 h18 a6,6 0 0 1 6,6 v30 a6,6 0 0 1 -6,6 h-18 a6,6 0 0 1 -6,-6 v-30 a6,6 0 0 1 6,-6 z"/>
+  </g>
+  <path fill="#FFFFFF" d="M47,33 h14 a6,6 0 0 1 6,6 v30 a6,6 0 0 1 -6,6 h-14 a6,6 0 0 1 -6,-6 v-30 a6,6 0 0 1 6,-6 z"/>
+  <path fill="#6A3FD0" d="M50,46.5 Q50,45 51.3,45.8 L60.5,52.7 Q61.6,54 60.5,55.3 L51.3,62.2 Q50,63 50,61.5 Z"/>
+  <path fill="#FF5C72" stroke="#FFFFFF" stroke-width="2.4" d="M66,38 m-8.5,0 a8.5,8.5 0 1 0 17,0 a8.5,8.5 0 1 0 -17,0"/>
+  <path fill="#FFFFFF" d="M64.9,34 h2.2 v8 h-2.2 z M62,36.9 h8 v2.2 h-8 z"/>
+</svg>
