@@ -11,6 +11,7 @@ import android.os.Looper
 import android.os.SystemClock
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import com.shrey.reelize.Prefs
 import com.shrey.reelize.data.Stats
 import com.shrey.reelize.overlay.CounterBubble
 import kotlinx.coroutines.CoroutineScope
@@ -68,6 +69,7 @@ class ReelWatchService : AccessibilityService() {
 
     override fun onServiceConnected() {
         Stats.init(this)
+        Prefs(this).counterEverOn = true
         bubble = CounterBubble(this)
         registerReceiver(screenOff, IntentFilter(Intent.ACTION_SCREEN_OFF))
         DetectionLog.add("service connected")

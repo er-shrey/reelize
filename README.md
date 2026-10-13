@@ -29,7 +29,7 @@ blurred.
 direct link to the current build:
 
 ```
-https://github.com/er-shrey/reelize/releases/download/v0.1.0/Reelize-0.1.0.apk
+https://github.com/er-shrey/reelize/releases/download/v0.2.0/Reelize-0.2.0.apk
 ```
 
 Android blocks installs from outside the Play Store until told otherwise, so installing it
@@ -42,7 +42,7 @@ browser, a chat app or a file manager. It has no "Install anyway" option. Instal
 from a computer isn't affected:
 
 ```
-adb install Reelize-0.1.0.apk
+adb install Reelize-0.2.0.apk
 ```
 
 ## Setup
@@ -59,6 +59,21 @@ one until it is on.
 | First launch |
 |---|
 | <img src="docs/screenshots/09-setup.png" width="240" /> |
+
+## Keeping the counter on
+
+If Android force-stops Reelize, it also switches the counter off in Accessibility settings,
+and only you can switch it back on. Many phones (Xiaomi, Oppo, Realme, OnePlus, Vivo, Huawei)
+force-stop every app in Recents on **Clear all**, and battery cleaners do the same.
+
+Reelize handles this in three ways:
+
+- If the counter was on and has been switched off, the dashboard says so and links straight
+  to the switch.
+- **Keep the counter running → Allow** asks Android to leave Reelize out of battery
+  optimization.
+- The same section lists the steps for your phone's brand, usually locking Reelize in Recents
+  and allowing it to run in the background, with a shortcut to Xiaomi's Autostart screen.
 
 ## What it does
 

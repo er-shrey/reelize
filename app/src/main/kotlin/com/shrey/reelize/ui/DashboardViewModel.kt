@@ -28,6 +28,10 @@ data class DashboardState(
     val counterOn: Boolean = true,
     val usageAccess: Boolean = true,
     val bubbleEnabled: Boolean = true,
+    /** The counter has run before, so if it is off now, Android switched it off. */
+    val counterEverOn: Boolean = false,
+    val batteryUnrestricted: Boolean = true,
+    val keepRunningDismissed: Boolean = true,
 ) {
     val day: ReelDay? get() = week.lastOrNull()
     val socialTotal: Long get() = social.sumOf { it.millis }
@@ -56,11 +60,23 @@ class DashboardViewModel(app: Application) : AndroidViewModel(app) {
         _state.update { it.copy(bubbleEnabled = enabled) }
     }
 
+    fun dismissKeepRunning() {
+        prefs.keepRunningDismissed = true
+        _state.update { it.copy(keepRunningDismissed = true) }
+    }
+
     /** Called on resume: permissions may have changed in Settings, and the day may have rolled over. */
     fun refresh() {
         val ctx = getApplication<Application>()
         _state.update {
-            it.copy(counterOn = Access.counterOn(ctx), usageAccess = SocialUsage.hasAccess(ctx), bubbleEnabled = prefs.bubbleEnabled)
+            it.copy(
+                counterOn = Access.counterOn(ctx),
+                usageAccess = SocialUsage.hasAccess(ctx),
+                bubbleEnabled = prefs.bubbleEnabled,
+                counterEverOn = prefs.counterEverOn,
+                batteryUnrestricted = Access.batteryUnrestricted(ctx),
+                keepRunningDismissed = prefs.keepRunningDismissed,
+            )
         }
         viewModelScope.launch { load(selected.value) }
     }

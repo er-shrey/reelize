@@ -48,5 +48,17 @@ class Prefs(context: Context) {
         get() = sp.getInt("bubble_y", -1)
         set(v) = sp.edit { putInt("bubble_y", v) }
 
+    /**
+     * Set the first time the counter service connects. If the service is later found off,
+     * Android switched it off (usually a force-stop), rather than the user never setting it up.
+     */
+    var counterEverOn: Boolean
+        get() = sp.getBoolean("counter_ever_on", false)
+        set(v) = sp.edit { putBoolean("counter_ever_on", v) }
+
+    var keepRunningDismissed: Boolean
+        get() = sp.getBoolean("keep_running_dismissed", false)
+        set(v) = sp.edit { putBoolean("keep_running_dismissed", v) }
+
     fun clearDraggedPosition() = sp.edit { remove("bubble_x"); remove("bubble_y") }
 }

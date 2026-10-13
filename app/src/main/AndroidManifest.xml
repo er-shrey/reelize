@@ -7,6 +7,12 @@
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
 
+    <!--
+      Lets the "Keep the counter running" button ask Android to leave Reelize out of battery
+      optimization, so cleanups and battery savers are less likely to force-stop it.
+    -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
     <!-- Product guarantee: no network access, ever. -->
     <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
 

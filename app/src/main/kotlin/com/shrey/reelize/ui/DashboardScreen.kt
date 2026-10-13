@@ -68,7 +68,13 @@ fun DashboardScreen(state: DashboardState, vm: DashboardViewModel, onOpenLog: ()
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = padding.calculateTopPadding() + 4.dp, bottom = padding.calculateBottomPadding() + 24.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            if (!state.counterOn) item { CounterSetupCard() }
+            when {
+                !state.counterOn && state.counterEverOn -> item { CounterOffCard() }
+                !state.counterOn -> item { CounterSetupCard() }
+                !state.batteryUnrestricted && !state.keepRunningDismissed -> item {
+                    KeepRunningPromptCard(onDismiss = vm::dismissKeepRunning)
+                }
+            }
             if (!state.usageAccess) item { UsageSetupCard() }
 
             item {
@@ -118,6 +124,8 @@ fun DashboardScreen(state: DashboardState, vm: DashboardViewModel, onOpenLog: ()
                     OutlinedButton(onClick = onOpenBubble) { Text("Customize bubble") }
                 }
             }
+
+            item { KeepRunningSection(state.batteryUnrestricted) }
         }
     }
 
@@ -228,6 +236,72 @@ private fun CounterSetupCard() {
     ) {
         Button(onClick = { Access.openAccessibility(context) }) { Text("Open settings") }
         OutlinedButton(onClick = { Access.openAppInfo(context) }) { Text("App info") }
+    }
+}
+
+/**
+ * The counter ran before and is off now. That is almost always a force-stop - "Clear all" in
+ * Recents on many phones, or a battery cleaner - which makes Android switch it off.
+ */
+@Composable
+private fun CounterOffCard() {
+    val context = LocalContext.current
+    SetupCard(
+        title = "The reel counter was switched off",
+        body = "Android turns the counter off when Reelize is force-stopped, which on many phones " +
+            "happens when you clear all apps from Recents or a battery cleaner runs. Nothing is " +
+            "counted until it's back on. Switch it on again, then follow the steps below so it stays on.",
+    ) {
+        Button(onClick = { Access.openAccessibility(context) }) { Text("Turn on again") }
+    }
+}
+
+/** Shown once the counter is working, until battery is unrestricted or the user dismisses it. */
+@Composable
+private fun KeepRunningPromptCard(onDismiss: () -> Unit) {
+    val context = LocalContext.current
+    SetupCard(
+        title = "Keep the counter running",
+        body = "Some phones close background apps to save battery, and that switches the counter " +
+            "off. Let Reelize run in the background so it keeps counting. The steps for your phone " +
+            "are at the bottom of this screen.",
+    ) {
+        Button(onClick = { Access.requestBatteryUnrestricted(context) }) { Text("Allow") }
+        TextButton(onClick = onDismiss) { Text("Not now") }
+    }
+}
+
+@Composable
+private fun KeepRunningSection(batteryUnrestricted: Boolean) {
+    val context = LocalContext.current
+    val tips = remember { keepRunningTips() }
+    SectionCard("Keep the counter running") {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                if (batteryUnrestricted) "Battery: unrestricted ✓" else "Battery: optimized - Android may stop Reelize",
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.weight(1f),
+            )
+            if (!batteryUnrestricted) {
+                Button(onClick = { Access.requestBatteryUnrestricted(context) }) { Text("Allow") }
+            }
+        }
+        Spacer(Modifier.height(12.dp))
+        Text("On ${tips.brand} phones", style = MaterialTheme.typography.titleSmall)
+        Spacer(Modifier.height(4.dp))
+        tips.steps.forEachIndexed { i, step ->
+            Text("${i + 1}. $step", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(vertical = 3.dp))
+        }
+        Spacer(Modifier.height(8.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            OutlinedButton(onClick = { Access.openAppInfo(context) }) { Text("App info") }
+            tips.extraScreen?.let { screen ->
+                OutlinedButton(onClick = {
+                    val intent = android.content.Intent().setClassName(screen.packageName, screen.className)
+                    if (!Access.tryStart(context, intent)) Access.openAppInfo(context)
+                }) { Text(screen.label) }
+            }
+        }
     }
 }
 
