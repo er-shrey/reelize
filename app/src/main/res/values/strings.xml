@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Reelize</string>
+    <string name="service_label">Reelize reel counter</string>
+    <string name="service_summary">Counts Instagram Reels and YouTube Shorts and shows a floating counter</string>
+    <string name="service_description">Reelize uses this to notice when Instagram Reels or YouTube Shorts are on screen and to count each one you swipe to. It looks only at the layout of those two apps, never at text, captions or anything you type. Everything stays on this phone; Reelize has no internet access.</string>
+</resources>
